@@ -51,7 +51,7 @@ This toolbox targets **netstandard2.0** and can only be used on a platform imple
 
 ## Configuration in Startup.ConfigureServices
 
-The paging framework is registered in the ConfigureServices method of the Startup class.
+The paging library is registered in the ConfigureServices method of the Startup class.
 
 ### Code
 

@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Digipolis.Paging.Mapping;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Digipolis.Paging.Startup
 {
@@ -17,8 +18,8 @@ namespace Digipolis.Paging.Startup
             services.AddTransient<IPageConverter, PageConverter>();
             services.AddTransient<ILinkGenerator, LinkGenerator>();
 
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.TryAddSingleton<IUrlHelperFactory, UrlHelperFactory>();
         }
     }
 }
