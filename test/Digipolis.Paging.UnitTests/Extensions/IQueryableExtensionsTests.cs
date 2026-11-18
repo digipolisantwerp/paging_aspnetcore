@@ -43,9 +43,10 @@ namespace Digipolis.Paging.UnitTests.Extensions
         }
 
         [Fact]
-        public void ToListAsyncSafe_Throws_When_IQueryable_Is_Null()
+        public async Task ToListAsyncSafe_Throws_When_IQueryable_Is_Null()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => ((IQueryable<WeatherForecast>)null).ToListAsyncSafe());
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                () => ((IQueryable<WeatherForecast>)null).ToListAsyncSafe());
         }
 
         [Fact]
@@ -69,9 +70,10 @@ namespace Digipolis.Paging.UnitTests.Extensions
         }
 
         [Fact]
-        public void CountAsyncSafe_Throws_When_IQueryable_Is_Null()
+        public async Task CountAsyncSafe_Throws_When_IQueryable_Is_Null()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => ((IQueryable<WeatherForecast>)null).CountAsyncSafe());
+            await Assert.ThrowsAsync<ArgumentNullException>(
+                () => ((IQueryable<WeatherForecast>)null).CountAsyncSafe());
         }
 
         [Fact]

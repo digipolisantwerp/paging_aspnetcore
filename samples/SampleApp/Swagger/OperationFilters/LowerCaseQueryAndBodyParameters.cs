@@ -1,7 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SampleApp.Swagger.OperationFilters
 {
@@ -11,10 +10,31 @@ namespace SampleApp.Swagger.OperationFilters
         {
             if (operation.Parameters == null) return;
 
-            foreach (var parameter in operation.Parameters.Where(x => x.In.HasValue && !String.IsNullOrWhiteSpace(x.In.ToString()) && (x.In.ToString().Equals("Query") || x.In.ToString().Equals("Body"))))
+            var newOpenApiParameterList = new List<IOpenApiParameter>();
+
+            foreach (var parameter in operation.Parameters)
             {
-                parameter.Name = parameter.Name.ToLowerInvariant();
+                if (parameter.In.HasValue && !string.IsNullOrWhiteSpace(parameter.In.ToString())
+                                         && (parameter.In.ToString().Equals("Query") || parameter.In.ToString().Equals("Body")))
+                {
+                    // add new parameter with changed name; because Name-property is immutable
+                    newOpenApiParameterList.Add(new OpenApiParameter
+                    {
+                        Name = parameter.Name.ToLowerInvariant(),
+                        In = parameter.In,
+                        Required = parameter.Required,
+                        Schema = parameter.Schema,
+                        Description = parameter.Description
+                    });
+                }
+                else
+                {
+                    newOpenApiParameterList.Add(parameter);
+                }
             }
+
+            operation.Parameters = newOpenApiParameterList;
+
         }
     }
 }
