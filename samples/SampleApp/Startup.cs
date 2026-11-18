@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using SampleApp.Swagger.Extensions;
 using SampleApp.Swagger.OperationFilters;
 
@@ -35,7 +35,6 @@ namespace SampleApp
                     License = new OpenApiLicense
                     {
                         Name = "None",
-                        Url = null,
                     },
                 });
 
@@ -64,7 +63,7 @@ namespace SampleApp
                 policy.AllowAnyOrigin();
             });
 
-            app.UseSwagger(c => c.SerializeAsV2 = true);
+            app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WeatherForecast API V1"));
             app.UseSwaggerUiRedirect();
 
